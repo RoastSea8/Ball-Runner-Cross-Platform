@@ -9,6 +9,9 @@ from kivy.clock import Clock
 Config.set('graphics', 'width', '1024')
 Config.set('graphics', 'height', '576')
 
+def_x = 1300
+def_y = 400
+
 
 class Ball(Widget):
     pass
@@ -33,6 +36,12 @@ class BallRunner(Widget):
 
     def update(self, dt):
         self.obstacle.move()
+
+        # checks for boundary and resets obstacle position
+
+        if self.obstacle.x <= 0:
+            self.obstacle.x = def_x
+            self.obstacle.y = def_y
 
 
 class BallRunnerApp(App):
