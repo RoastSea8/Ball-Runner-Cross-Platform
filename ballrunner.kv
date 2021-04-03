@@ -1,5 +1,21 @@
-<BallRunner>:
+<Ball>:
+    size: 100, 100
+    pos : 20, 400
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<Obstacle>:
+    size: 160,320
+    pos : 1300, 400
     canvas:
         Rectangle:
-            pos : 400,400
-            size: 180,180
+            pos: self.pos
+            size: self.size
+
+<BallRunner>:
+    Obstacle
+    Ball
+
+
