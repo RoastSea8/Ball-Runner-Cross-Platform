@@ -1,15 +1,11 @@
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.uix.label import Label
 from kivy.config import Config
 from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
-import asyncio
-
-Config.set('graphics', 'width', '1024')
-Config.set('graphics', 'height', '576')
+from kivy.core.window import Window
 
 def_x_obs = 1300
 def_y_obs = 400
@@ -47,6 +43,7 @@ class BallRunner(Widget):
     obstacle = ObjectProperty(None)
     ball = ObjectProperty(None)
     event = None
+    current_touch = None
 
     def moving_obstacle(self):
         self.obstacle.velocity = Vector(-7, 0)
@@ -68,24 +65,30 @@ class BallRunner(Widget):
             self.clear_widgets()
 
     def moving_ball(self):
-        self.ball.velocity = Vector(0, 8)
+        self.ball.velocity = Vector(0, 10)
 
     def update_ball(self, dt):
         self.ball.move()
 
         # checks if ball has reached climax and changes directions if it has
 
-        if self.ball.y >= 900:
-            self.ball.velocity = Vector(0, -8)
+        if self.ball.y >= 1050:
+            self.ball.velocity = Vector(0, -9)
 
         # checks if ball has reached to base and stops if it has
 
         if self.ball.y <= def_y_ball:
             self.event.cancel()
+            self.current_touch = None # allows for else-statement to pass in on_touch_down
 
     def on_touch_down(self, touch):
-        self.moving_ball()
-        self.event = Clock.schedule_interval(self.update_ball, 1.0/60.0)
+        # returns if touch object is received more than once in a single jump command
+        if self.current_touch is not None:
+            return
+        else:
+            self.current_touch = touch
+            self.moving_ball()
+            self.event = Clock.schedule_interval(self.update_ball, 1.0/60.0)
 
 
 class BallRunnerApp(App):
@@ -99,4 +102,5 @@ class BallRunnerApp(App):
 
 if __name__ == "__main__":
     window = BallRunnerApp()
+    Window.maximize()
     window.run()
