@@ -7,6 +7,7 @@
             size: self.size
 
 <Obstacle>:
+    id: _ball
     size: 160,320
     pos : 1300, 400
     canvas:
@@ -16,8 +17,11 @@
 
 <BallRunner>:
     obstacle: _obstacle
+    ball: _ball
     Obstacle:
         id: _obstacle
-    Ball
+    Ball:
+        id: _ball
+
 
 
