@@ -15,7 +15,6 @@ def_y_obs = 400
 def_x_ball = 20
 def_y_ball = 400
 
-# adding 'aditya2604' git account to repo
 
 class Ball(Widget):
     velocity_x = NumericProperty(0)
