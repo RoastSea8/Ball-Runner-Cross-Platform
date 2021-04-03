@@ -1,10 +1,12 @@
 import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 from kivy.config import Config
 from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
+import asyncio
 
 Config.set('graphics', 'width', '1024')
 Config.set('graphics', 'height', '576')
@@ -36,6 +38,9 @@ class Obstacle(Widget):
     def move(self):
         self.pos = Vector(*self.velocity) + self.pos
 
+    def has_collided(self, ball):
+        return self.collide_widget(ball)
+
 
 # moving the obstacle by calling move()
 class BallRunner(Widget):
@@ -54,6 +59,13 @@ class BallRunner(Widget):
         if self.obstacle.x <= -160:
             self.obstacle.x = def_x_obs
             self.obstacle.y = def_y_obs
+
+        if self.obstacle.has_collided(self.ball):
+            try:
+                self.event.cancel()
+            except:
+                pass
+            self.clear_widgets()
 
     def moving_ball(self):
         self.ball.velocity = Vector(0, 8)
