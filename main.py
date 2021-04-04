@@ -37,7 +37,6 @@ class Background(Widget):
         # Update the uvpos of the texture
         self.time_passed = time_passed
         self.grass_texture.uvpos = ((self.grass_texture.uvpos[0] + self.time_passed/2.0) % Window.width, self.grass_texture.uvpos[1])
-        print(self.time_passed)
 
         # Redraw the texture
         texture = self.property('grass_texture')
@@ -52,7 +51,6 @@ class Ball(Widget):
     # latest position = current velocity + current position
     def move(self):
         self.pos = Vector(*self.velocity) + self.pos
-        # print(self.pos)
 
 
 class Obstacle(Widget):
