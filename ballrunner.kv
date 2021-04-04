@@ -2,6 +2,8 @@
     size: 100, 100
     pos : 20, 400
     canvas:
+        Color:
+            rgba: 1, 0, 0, 1
         Ellipse:
             pos: self.pos
             size: self.size
@@ -11,11 +13,18 @@
     size: 160,320
     pos : 1300, 400
     canvas:
+        Color:
+            rgba: 0, 0, 1, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
 <BallRunner>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'images/grass.jpg'
     obstacle: _obstacle
     ball: _ball
     Obstacle:
