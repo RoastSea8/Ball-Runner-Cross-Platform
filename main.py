@@ -94,7 +94,6 @@ class BallRunner(Background, Widget):
             self.ball_start_down_spd -= .2
             self.ball.velocity = Vector(0, self.ball_start_down_spd)
             self.time_passed += .5
-            print(self.time_passed)
 
         if self.obstacle.has_collided(self.ball):
             try:
