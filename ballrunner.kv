@@ -19,14 +19,20 @@
             pos: self.pos
             size: self.size
 
-<BallRunner>:
+<Background>:
+    id: _background
     canvas.before:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'images/grass.jpg'
+            texture: self.grass_texture
+
+<BallRunner>:
+    background: _background
     obstacle: _obstacle
     ball: _ball
+    Background:
+        id: _background
     Obstacle:
         id: _obstacle
     Ball:
