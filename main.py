@@ -8,7 +8,7 @@ from kivy.core.window import Window
 from kivy.uix.image import Image
 from kivy.graphics import *
 
-def_x_obs = 1300
+def_x_obs = 1700
 def_y_obs = 200
 
 def_x_ball = 20
@@ -20,6 +20,7 @@ ball_max_height = 800
 
 class Background(Widget):
     grass_texture = ObjectProperty(None)
+    num = 2.4
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -36,12 +37,11 @@ class Background(Widget):
     def scroll_textures(self, time_passed):
         # Update the uvpos of the texture
         self.time_passed = time_passed
-        self.grass_texture.uvpos = ((self.grass_texture.uvpos[0] + self.time_passed/2.0) % Window.width, self.grass_texture.uvpos[1])
+        self.grass_texture.uvpos = ((self.grass_texture.uvpos[0] + self.time_passed/self.num) % Window.width, self.grass_texture.uvpos[1])
 
         # Redraw the texture
         texture = self.property('grass_texture')
         texture.dispatch(self)
-
 
 class Ball(Widget):
     velocity_x = NumericProperty(0)
@@ -89,9 +89,9 @@ class BallRunner(Background, Widget):
             self.obstacle.y = def_y_obs
             self.obs_start_spd -= .5
             self.obstacle.velocity = Vector(self.obs_start_spd, 0)
-            self.ball_start_down_spd -= .2
+            self.ball_start_down_spd -= .3
             self.ball.velocity = Vector(0, self.ball_start_down_spd)
-            self.time_passed += .5
+            Background.num -= 0.1
 
         if self.obstacle.has_collided(self.ball):
             try:
@@ -132,12 +132,12 @@ class BallRunner(Background, Widget):
 
 class BallRunnerApp(App):
     def on_start(self):
-        Clock.schedule_interval(self.root.ids._background.scroll_textures, 1/120.0)
+        Clock.schedule_interval(self.root.ids._background.scroll_textures, 1/60.0)
 
     def build(self):
         game = BallRunner()
         game.moving_obstacle()
-        Clock.schedule_interval(game.update_obstacle, 1/360.0)
+        Clock.schedule_interval(game.update_obstacle, 1/60.0)
         return game
 
 
