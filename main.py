@@ -9,10 +9,10 @@ from kivy.uix.image import Image
 from kivy.graphics import *
 
 def_x_obs = 1700
-def_y_obs = 200
+def_y_obs = 150
 
 def_x_ball = 20
-def_y_ball = 200
+def_y_ball = 150
 
 obs_right_end = -160
 ball_max_height = 800
